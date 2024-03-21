@@ -29,6 +29,12 @@
             init() {
                 this.currentStatus = '{{$order->status}}';
                 this.updateProgressBar();
+
+                Echo.private('orders.1')
+                    .listen('OrderShipmentStatusUpdated', (e) => {
+                        this.currentStatus = e.status;
+                        this.updateProgressBar();
+                    });
             },
             updateProgressBar() {
                 if (this.currentStatus === 'processing') {
